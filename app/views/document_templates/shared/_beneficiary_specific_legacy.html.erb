@@ -1,0 +1,6 @@
+<% @beneficiaries.each do |bene| %>
+  <p>
+    <%= bene['second_death'] ? "Upon Failing, to " : "To " %>
+    <%= bene['name'] %>, my <%= bene['relationship'] %>, residing at <%= bene['address'] %>, <%= bene['postcode'] %>, contactable at <%= bene['telephone'] %>, I give <%= bene['items'] %>.
+  </p>
+<% end %>
