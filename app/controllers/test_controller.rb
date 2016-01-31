@@ -71,7 +71,18 @@ class TestController < ApplicationController
       }
     ]
 
-    render 'document_templates/example_document'
+    html_doc = render_to_string 'document_templates/example_document'
+    doc = PandocRuby.convert(
+      html_doc,
+      "reference-docx": "~/Downloads/reference.docx",
+      from: :html,
+      to: 'docx'
+    )
+
+    send_data(doc,
+              filename: "out.docx",
+              type: Mime::DOCX,
+              disposition: 'attachment')
   end
 
 end
