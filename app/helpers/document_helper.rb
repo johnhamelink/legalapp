@@ -25,22 +25,32 @@ module DocumentHelper
     new_text
   end
 
-
   def retrieve_match(match, index)
-    # Split them by '.' seperators
-    query = match.gsub(/[{}]/,'').split('.')
-    # The first one is an instance variable
-    instance_var = "@#{query.first}".to_sym
-    instance_var = instance_variable_get(instance_var)
-    query.delete(query.first)
-
-    # Query all the way down the list of parts
-    if query.is_a?(Array) && query.size > 0
-      query.each do |part|
-        instance_var = instance_var[part]
+      # Split them by '.' seperators
+      query = match.gsub(/[{}]/,'').split('.')
+      # The first one is an instance variable
+      instance_var = "@#{query.first}".to_sym
+      instance_var = instance_variable_get(instance_var)
+      if instance_var.nil?
+        return error_message("Could not find data about #{match}")
       end
-    end
+      query.delete(query.first)
+
+      # Query all the way down the list of parts
+      if query.is_a?(Array) && query.size > 0
+        query.each do |part|
+          if new_var = instance_var[part]
+            instance_var = new_var
+          else
+            return error_message("Could not find data about #{match}: #{part} is not a property")
+          end
+        end
+      end
     instance_var
+  end
+
+  def error_message(text)
+    "<b>Error: #{text}</b>"
   end
 
 end

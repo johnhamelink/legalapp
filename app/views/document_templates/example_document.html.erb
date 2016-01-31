@@ -47,6 +47,10 @@
 
     <%= paragraph_content(interpolate(@interpolated_content, instance_variables)) %>
 
+    <h4>Some content here refers to data that doesn't exist:</h4>
+
+    <%= paragraph_content(interpolate(@interpolated_content_with_errors, instance_variables)) %>
+
     <h3>Loopable content</h3>
 
     <i>This is content which can be iterated over - a good example of this is

@@ -4,12 +4,12 @@ class TestController < ApplicationController
     @document = { 'title' => 'Lorem Ipsum' }
     @sender = {
       'name' => 'John Hamelink',
-      'address' => "1/3 30 Handel Place\nNew Gorbals\nGlasgow",
+      'address' => "1/3 30 Handel Place<br/>New Gorbals<br/>Glasgow".html_safe,
       'postcode' => 'G50TP'
     }
     @receiver = {
       'name' => 'Alastair Bokla',
-      'address' => "1/3 30 Handel Place\nNew Gorbals\nGlasgow",
+      'address' => "1/3 30 Handel Place<br/>New Gorbals<br/>Glasgow".html_safe,
       'postcode' => 'G50TP'
     }
 
@@ -45,7 +45,8 @@ class TestController < ApplicationController
     pretium nisi quam vitae mi. Fusce vel volutpat elit. Nam sagittis nisi dui.
     """
 
-    @interpolated_content = "This is interpolated content, and is being sent by {{sender.name}}, of {{sender.address}}"
+    @interpolated_content = "This is interpolated content, and is being sent by {{sender.name}}, of: <br/> {{sender.address}}"
+    @interpolated_content_with_errors = "Error messages here: {{blerg}}, here: {{sender.blerg}}, and here: {{sender.blerg.lorem}}"
 
     @beneficiaries = [
       {
