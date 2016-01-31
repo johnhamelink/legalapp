@@ -25,6 +25,8 @@ module DocumentHelper
     new_text
   end
 
+  # TODO: Instead of retrieving instance variables,
+  # we should be doing a lookup against the DB instead.
   def retrieve_match(match, index)
       # Split them by '.' seperators
       query = match.gsub(/[{}]/,'').split('.')

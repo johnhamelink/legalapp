@@ -1,7 +1,6 @@
 class TestController < ApplicationController
 
   def index
-    @document = { 'title' => 'Lorem Ipsum' }
     @sender = {
       'name' => 'John Hamelink',
       'address' => "1/3 30 Handel Place<br/>New Gorbals<br/>Glasgow".html_safe,
@@ -71,18 +70,27 @@ class TestController < ApplicationController
       }
     ]
 
-    html_doc = render_to_string 'document_templates/example_document'
-    doc = PandocRuby.convert(
-      html_doc,
-      "reference-docx": "~/Downloads/reference.docx",
-      from: :html,
-      to: 'docx'
-    )
+    @template = DocumentTemplate.find_by_id(params[:document_template_id])
+    @reference_docx = "~/Downloads/reference.docx"
 
-    send_data(doc,
-              filename: "out.docx",
-              type: Mime::DOCX,
-              disposition: 'attachment')
+    respond_to do |format|
+      format.docx {
+        html_doc = render_to_string "document_templates/#{@template.view_key}.html"
+        doc = PandocRuby.convert(
+          html_doc,
+          "reference-docx": @reference_docx,
+          from: :html,
+          to: 'docx'
+        )
+
+        send_data(doc,
+                  filename: "#{@template.name.dasherize}.docx",
+                  type: Mime::DOCX,
+                  disposition: 'attachment')
+      }
+
+      format.html { render "document_templates/#{@template.view_key}" }
+    end
   end
 
 end

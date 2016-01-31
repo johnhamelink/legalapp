@@ -34,4 +34,13 @@ RailsAdmin.config do |config|
     # history_index
     # history_show
   end
+
+  config.model 'DocumentTemplate' do
+    configure :view_key do
+      label "Name of View File"
+    end
+  end
+
+  config.model 'Client'
+
 end
