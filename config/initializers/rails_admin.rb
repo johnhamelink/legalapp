@@ -42,5 +42,10 @@ RailsAdmin.config do |config|
   end
 
   config.model 'Client'
+  config.model 'Document' do
+    configure :document_state do
+      label "State"
+    end
+  end
 
 end

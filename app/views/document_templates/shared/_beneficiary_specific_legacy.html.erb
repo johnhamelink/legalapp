@@ -1,6 +1,6 @@
-<% @beneficiaries.each do |bene| %>
+<% stakeholders(:beneficiary).each do |bene| %>
   <p>
-    <%= bene['second_death'] ? "Upon Failing, to " : "To " %>
-    <%= bene['name'] %>, my <%= bene['relationship'] %>, residing at <%= bene['address'] %>, <%= bene['postcode'] %>, contactable at <%= bene['telephone'] %>, I give <%= bene['items'] %>.
+    <%= bene.get_attr('second_death') ? "Upon Failing, to " : "To " %>
+    <%= bene.get_attr('name') %>, my <%= bene.get_attr('relationship') %>, residing at <%= bene.get_attr('address') %>, <%= bene.get_attr('postcode') %>, contactable at <%= bene.get_attr('telephone') %>, I give <%= bene.get_attr('items') %>.
   </p>
 <% end %>
