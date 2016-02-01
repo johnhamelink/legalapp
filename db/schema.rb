@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160201001322) do
+ActiveRecord::Schema.define(version: 20160201115854) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -52,6 +52,16 @@ ActiveRecord::Schema.define(version: 20160201001322) do
 
   add_index "document_stakeholders", ["document_id"], name: "index_document_stakeholders_on_document_id", using: :btree
 
+  create_table "document_template_attributes", force: :cascade do |t|
+    t.integer  "document_template_id"
+    t.string   "title"
+    t.string   "key"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
+  add_index "document_template_attributes", ["document_template_id"], name: "index_document_template_attributes_on_document_template_id", using: :btree
+
   create_table "document_templates", force: :cascade do |t|
     t.string   "name"
     t.string   "view_key"
@@ -75,6 +85,7 @@ ActiveRecord::Schema.define(version: 20160201001322) do
   add_foreign_key "client_data", "clients"
   add_foreign_key "document_stakeholder_attributes", "document_stakeholders"
   add_foreign_key "document_stakeholders", "documents"
+  add_foreign_key "document_template_attributes", "document_templates"
   add_foreign_key "documents", "clients"
   add_foreign_key "documents", "document_templates"
 end

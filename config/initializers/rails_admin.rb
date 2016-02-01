@@ -47,5 +47,6 @@ RailsAdmin.config do |config|
       label "State"
     end
   end
+  config.model 'DocumentTemplateAttribute'
 
 end
