@@ -1,4 +1,4 @@
 Rails.application.routes.draw do
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
-  get 'test' => 'test#index'
+  get 'export/:document_id' => 'export#create'
 end

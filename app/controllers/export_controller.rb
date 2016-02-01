@@ -1,7 +1,10 @@
-class TestController < ApplicationController
+class ExportController < ApplicationController
 
-  def index
-    @doc = Document.find_by_id(params[:document_id])
+  def create
+    unless @doc = Document.find_by_id(params[:document_id].to_i)
+      render text: "Error: Could not find Document with ID '#{params[:document_id]}'"
+      return
+    end
     @template = @doc.document_template
     @reference_docx = "~/Downloads/reference.docx"
 
@@ -12,7 +15,7 @@ class TestController < ApplicationController
           html_doc,
           "reference-docx": @reference_docx,
           from: :html,
-          to: 'docx'
+          to: :docx
         )
 
         send_data(doc,
